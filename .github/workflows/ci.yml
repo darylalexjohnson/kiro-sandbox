@@ -18,10 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         node: ["18.x", "20.x"]
-    defaults:
-      run:
-        # The app lives in a subdirectory of the repo.
-        working-directory: hello-daryl
     steps:
       - name: Checkout
         uses: actions/checkout@v4
