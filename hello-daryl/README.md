@@ -97,6 +97,73 @@ All components live in `src/components/` and are re-exported from
 | **Card** | `children`, `className?: string` |
 | **Badge** | `children`, `variant?: 'neutral' \| 'accent'` (default `'neutral'`) |
 | **Stack** | `direction?: 'row' \| 'column'` (default `'column'`), `gap?: 1 \| 2 \| 3 \| 4 \| 6 \| 8 \| 12` (default `4`), `children`, `className?: string` |
+| **Splash** | `onDismiss?: () => void`, `durationMs?: number` (default `2200`) |
 
 Each component ships its own token-only CSS file, imported at the top of the
 component module.
+
+### Splash
+
+`Splash` is an animated, theme-aware intro overlay that greets the user with a
+large, centered **"Hello, Daryl"** wordmark before revealing the landing
+content. It is rendered by `App` on initial load and dismisses itself
+automatically after `durationMs` (default **2200 ms**); a focusable **Skip**
+button lets users dismiss it immediately.
+
+Highlights:
+
+- **Token-only styling** — colours, spacing, radii, shadows, typography, and
+  easing all come from the design tokens in `src/styles/tokens.css`. There are
+  no hard-coded colours.
+- **CSS keyframe animations** — a staggered per-letter entrance
+  (`animation-delay: calc(var(--i) * 60ms)`), a pulsing radial accent glow, and
+  a panel fade/drift on mount.
+- **Theme-aware** — automatically adapts to light/dark because it consumes the
+  semantic theme aliases.
+- **Reduced motion** — a `@media (prefers-reduced-motion: reduce)` block
+  disables the animations and shows the final resting state instantly.
+- **Accessible** — the overlay is a labelled `role="dialog"` region, the
+  wordmark exposes a single accessible name via `aria-label` (per-letter spans
+  are `aria-hidden`), and the Skip button is auto-focused with the global
+  focus-visible ring.
+
+Props:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onDismiss` | `() => void` | — | Called when the splash auto-dismisses or the Skip button is clicked. |
+| `durationMs` | `number` | `2200` | How long (ms) the splash stays before auto-dismissing. |
+
+## Screenshots
+
+The splash screen rendered in its final (resting) state. A dependency-free
+static reproduction lives at `docs/preview/splash-preview.html` (supports
+`?theme=dark`); the images below were captured from it with headless Chrome.
+
+### Light — desktop (1440×900)
+
+![Splash screen, light theme, desktop](docs/screenshots/splash-light-desktop.png)
+
+### Dark — desktop (1440×900)
+
+![Splash screen, dark theme, desktop](docs/screenshots/splash-dark-desktop.png)
+
+### Mobile (390×844)
+
+![Splash screen, mobile](docs/screenshots/splash-mobile.png)
+
+## Testing
+
+Unit tests are authored with [Vitest](https://vitest.dev/) and
+[Testing Library](https://testing-library.com/) (jsdom environment). Config
+lives in `vitest.config.ts` with a jsdom setup file at `src/test/setup.ts`;
+tests are co-located under `src/components/__tests__/`.
+
+```sh
+npm run test        # run once (vitest run)
+npm run test:watch  # watch mode
+```
+
+> As with the rest of the project, the test dependencies are declared in
+> `package.json` but not installed in this sandbox (no registry access), so the
+> tests are authored-only and have not been executed here.

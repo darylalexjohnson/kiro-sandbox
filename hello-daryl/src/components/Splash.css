@@ -1,0 +1,123 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background-color: var(--surface);
+  animation: splash-fade var(--duration-base) var(--ease-standard) both;
+}
+
+.splash__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-12) var(--space-8);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-raised);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* Decorative radial glow behind the wordmark, drawn from the accent ramp. */
+.splash__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      var(--color-accent-300),
+      var(--color-accent-100),
+      transparent 70%
+    );
+  opacity: 0.55;
+  animation: splash-glow calc(var(--duration-base) * 12) var(--ease-standard) infinite alternate;
+}
+
+.splash__title {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-align: center;
+}
+
+.splash__letter {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  animation: splash-letter var(--duration-base) var(--ease-emphasized) both;
+  animation-delay: calc(var(--i) * 60ms);
+}
+
+.splash__skip {
+  position: relative;
+}
+
+@keyframes splash-fade {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-2));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-letter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    filter: blur(var(--space-1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes splash-glow {
+  from {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash,
+  .splash__letter,
+  .splash__glow {
+    animation: none;
+  }
+
+  .splash {
+    opacity: 1;
+    transform: none;
+  }
+
+  .splash__letter {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .splash__glow {
+    opacity: 0.55;
+    transform: none;
+  }
+}
