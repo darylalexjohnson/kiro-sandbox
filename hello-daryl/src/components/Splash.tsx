@@ -9,6 +9,7 @@ export interface SplashProps {
 }
 
 const TITLE = 'Hello, Daryl'
+const CONFETTI = [0, 1, 2, 3, 4, 5, 6, 7]
 
 export function Splash({ onDismiss, durationMs = 2200 }: SplashProps) {
   const skipRef = useRef<HTMLSpanElement>(null)
@@ -33,8 +34,22 @@ export function Splash({ onDismiss, durationMs = 2200 }: SplashProps) {
 
   return (
     <div className="splash" role="dialog" aria-modal="true" aria-label="Welcome">
-      <div className="splash__panel">
-        <span className="splash__glow" aria-hidden="true" />
+      <div className="splash__gradient" aria-hidden="true" />
+      <div className="splash__blobs" aria-hidden="true">
+        <span className="splash__blob splash__blob--1" />
+        <span className="splash__blob splash__blob--2" />
+        <span className="splash__blob splash__blob--3" />
+      </div>
+      <div className="splash__confetti" aria-hidden="true">
+        {CONFETTI.map((i) => (
+          <span
+            key={i}
+            className="splash__dot"
+            style={{ '--i': i } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="splash__content">
         <h1 className="splash__title" aria-label={TITLE}>
           {TITLE.split('').map((char, index) => (
             <span

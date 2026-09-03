@@ -19,6 +19,15 @@
   --color-accent-500: #3b82f6;
   --color-accent-700: #1d4ed8;
 
+  /* Extra playful hue ramps for the splash (2 shades each + amber pop) */
+  --color-violet-400: #a78bfa;
+  --color-violet-600: #7c3aed;
+  --color-pink-400: #f472b6;
+  --color-pink-600: #db2777;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-600: #0891b2;
+  --color-amber-400: #fbbf24;
+
   /* Type scale (modular ~1.25, 6 sizes) */
   --font-size-sm: 0.8rem;
   --font-size-base: 1rem;
@@ -26,6 +35,7 @@
   --font-size-xl: 1.563rem;
   --font-size-2xl: 1.953rem;
   --font-size-3xl: 2.441rem;
+  --font-size-display: clamp(2.75rem, 11vw, 7.5rem);
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
 
@@ -65,6 +75,29 @@
   --accent-contrast: var(--color-neutral-0);
   --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.08);
   --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.12);
+
+  /* Playful splash gradient tokens (light) */
+  --splash-gradient: linear-gradient(
+    120deg,
+    var(--color-accent-300) 0%,
+    var(--color-violet-400) 35%,
+    var(--color-pink-400) 70%,
+    var(--color-cyan-400) 100%
+  );
+  --splash-blob-1: var(--color-pink-400);
+  --splash-blob-2: var(--color-cyan-400);
+  --splash-blob-3: var(--color-violet-400);
+  --splash-title-gradient: linear-gradient(
+    90deg,
+    var(--color-accent-700),
+    var(--color-violet-600),
+    var(--color-pink-600)
+  );
+  --splash-title-fallback: var(--color-neutral-900);
+  --splash-confetti-1: var(--color-amber-400);
+  --splash-confetti-2: var(--color-cyan-600);
+  --splash-confetti-3: var(--color-pink-600);
+  --splash-confetti-4: var(--color-neutral-0);
 }
 
 /* Dark theme via OS preference (no explicit choice made yet) */
@@ -79,6 +112,29 @@
     --accent-contrast: var(--color-neutral-900);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    /* Playful splash gradient tokens (dark: deeper shades) */
+    --splash-gradient: linear-gradient(
+      120deg,
+      var(--color-accent-700) 0%,
+      var(--color-violet-600) 35%,
+      var(--color-pink-600) 70%,
+      var(--color-cyan-600) 100%
+    );
+    --splash-blob-1: var(--color-pink-600);
+    --splash-blob-2: var(--color-cyan-600);
+    --splash-blob-3: var(--color-violet-600);
+    --splash-title-gradient: linear-gradient(
+      90deg,
+      var(--color-accent-300),
+      var(--color-violet-400),
+      var(--color-pink-400)
+    );
+    --splash-title-fallback: var(--color-neutral-50);
+    --splash-confetti-1: var(--color-amber-400);
+    --splash-confetti-2: var(--color-cyan-400);
+    --splash-confetti-3: var(--color-pink-400);
+    --splash-confetti-4: var(--color-neutral-0);
   }
 }
 
@@ -93,6 +149,29 @@
   --accent-contrast: var(--color-neutral-0);
   --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.08);
   --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.12);
+
+  /* Playful splash gradient tokens (light) */
+  --splash-gradient: linear-gradient(
+    120deg,
+    var(--color-accent-300) 0%,
+    var(--color-violet-400) 35%,
+    var(--color-pink-400) 70%,
+    var(--color-cyan-400) 100%
+  );
+  --splash-blob-1: var(--color-pink-400);
+  --splash-blob-2: var(--color-cyan-400);
+  --splash-blob-3: var(--color-violet-400);
+  --splash-title-gradient: linear-gradient(
+    90deg,
+    var(--color-accent-700),
+    var(--color-violet-600),
+    var(--color-pink-600)
+  );
+  --splash-title-fallback: var(--color-neutral-900);
+  --splash-confetti-1: var(--color-amber-400);
+  --splash-confetti-2: var(--color-cyan-600);
+  --splash-confetti-3: var(--color-pink-600);
+  --splash-confetti-4: var(--color-neutral-0);
 }
 
 /* Explicit dark choice */
@@ -106,4 +185,27 @@
   --accent-contrast: var(--color-neutral-900);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  /* Playful splash gradient tokens (dark: deeper shades) */
+  --splash-gradient: linear-gradient(
+    120deg,
+    var(--color-accent-700) 0%,
+    var(--color-violet-600) 35%,
+    var(--color-pink-600) 70%,
+    var(--color-cyan-600) 100%
+  );
+  --splash-blob-1: var(--color-pink-600);
+  --splash-blob-2: var(--color-cyan-600);
+  --splash-blob-3: var(--color-violet-600);
+  --splash-title-gradient: linear-gradient(
+    90deg,
+    var(--color-accent-300),
+    var(--color-violet-400),
+    var(--color-pink-400)
+  );
+  --splash-title-fallback: var(--color-neutral-50);
+  --splash-confetti-1: var(--color-amber-400);
+  --splash-confetti-2: var(--color-cyan-400);
+  --splash-confetti-3: var(--color-pink-400);
+  --splash-confetti-4: var(--color-neutral-0);
 }
