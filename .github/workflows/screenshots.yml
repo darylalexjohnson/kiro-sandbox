@@ -1,0 +1,79 @@
+name: Screenshots
+
+# Builds the real app, drives it with Playwright/Chromium, and commits the
+# captured PNGs back to the branch so they render on the PR (and can be pulled
+# for inline review). The authoring sandbox has no npm registry access, so this
+# is the only place the actual running app can be screenshotted.
+
+on:
+  push:
+    branches: ["**"]
+    # Don't re-run when this job commits the screenshots back.
+    paths-ignore:
+      - "hello-daryl/docs/screenshots/**"
+  workflow_dispatch:
+
+# Needed to push the screenshot commit back to the branch.
+permissions:
+  contents: write
+
+concurrency:
+  group: screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hello-daryl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: Install Playwright (ad hoc, not committed)
+        run: |
+          npm install -D playwright
+          npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve bundle and capture screenshots
+        env:
+          BASE_URL: http://127.0.0.1:4173
+          OUT_DIR: docs/screenshots
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 &
+          SERVER_PID=$!
+          # Wait for the preview server to answer.
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:4173 >/dev/null; then
+              echo "preview server is up"; break
+            fi
+            sleep 1
+          done
+          node scripts/screenshot.mjs
+          kill "$SERVER_PID" 2>/dev/null || true
+
+      - name: Commit screenshots back to the branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots/app-*.png
+          if git diff --staged --quiet; then
+            echo "No screenshot changes to commit."
+          else
+            git commit -m "chore: update app screenshots via Playwright [skip ci]"
+            git push
+          fi
