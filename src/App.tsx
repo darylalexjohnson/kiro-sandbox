@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Splash, Stack } from './components'
+import { BackgroundFX, Badge, Button, Card, Splash, Stack } from './components'
 import { useTheme } from './hooks/useTheme'
 import './App.css'
 
@@ -10,6 +10,7 @@ function App() {
 
   return (
     <>
+      <BackgroundFX />
       {showSplash && <Splash onDismiss={() => setShowSplash(false)} />}
       <main className="app">
         <div className="app__inner">

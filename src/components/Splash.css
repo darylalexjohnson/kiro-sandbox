@@ -34,7 +34,7 @@
   position: absolute;
   width: 46vmax;
   height: 46vmax;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   filter: blur(var(--space-12));
   opacity: 0.55;
   mix-blend-mode: screen;

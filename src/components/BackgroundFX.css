@@ -1,0 +1,77 @@
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-fx__blob {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: var(--radius-pill);
+  filter: blur(80px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.bg-fx__blob--1 {
+  top: -12vmax;
+  left: -8vmax;
+  background: radial-gradient(circle at center, var(--color-primary-500), transparent 70%);
+  animation: bg-fx-drift-a 22s var(--ease-standard) infinite alternate;
+  animation-delay: -8s;
+}
+
+.bg-fx__blob--2 {
+  right: -14vmax;
+  top: -6vmax;
+  background: radial-gradient(circle at center, var(--color-secondary-500), transparent 70%);
+  animation: bg-fx-drift-b 28s var(--ease-standard) infinite alternate;
+  animation-delay: -16s;
+}
+
+.bg-fx__blob--3 {
+  bottom: -12vmax;
+  left: 20%;
+  background: radial-gradient(circle at center, var(--color-cyan-500), transparent 70%);
+  animation: bg-fx-drift-a 34s var(--ease-standard) infinite alternate;
+  animation-delay: -24s;
+}
+
+.bg-fx__blob--4 {
+  right: -10vmax;
+  bottom: -14vmax;
+  background: radial-gradient(circle at center, var(--color-violet-500), transparent 70%);
+  animation: bg-fx-drift-b 40s var(--ease-standard) infinite alternate;
+}
+
+@keyframes bg-fx-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(8vmax, 6vmax, 0) scale(1.15);
+  }
+}
+
+@keyframes bg-fx-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-7vmax, -5vmax, 0) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-fx__blob {
+    animation: none;
+  }
+
+  .bg-fx {
+    background: radial-gradient(120% 120% at 50% 0%, var(--accent-soft), transparent 60%);
+  }
+}

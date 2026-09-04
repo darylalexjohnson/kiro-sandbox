@@ -1,31 +1,56 @@
 :root {
   /* ---------------------------------------------------------------------
-   * Raw ramps + theme-independent tokens
+   * Raw ramps + theme-independent tokens ("Aurora" palette)
    * ------------------------------------------------------------------- */
 
-  /* Neutral ramp (8 shades) */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f7f8fa;
-  --color-neutral-100: #eceef2;
-  --color-neutral-200: #d5d9e0;
-  --color-neutral-300: #b0b7c3;
-  --color-neutral-500: #6b7280;
-  --color-neutral-700: #374151;
-  --color-neutral-900: #111827;
+  /* Slate neutral ramp (cool grays) */
+  --color-slate-0: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
 
-  /* Accent ramp (4 shades) */
-  --color-accent-100: #dbeafe;
-  --color-accent-300: #93c5fd;
-  --color-accent-500: #3b82f6;
-  --color-accent-700: #1d4ed8;
+  /* Primary indigo ramp */
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
 
-  /* Extra playful hue ramps for the splash (2 shades each + amber pop) */
+  /* Violet ramp */
   --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
   --color-violet-600: #7c3aed;
-  --color-pink-400: #f472b6;
-  --color-pink-600: #db2777;
+  --color-violet-700: #6d28d9;
+
+  /* Secondary fuchsia/magenta ramp */
+  --color-secondary-100: #fae8ff;
+  --color-secondary-300: #f0abfc;
+  --color-secondary-400: #e879f9;
+  --color-secondary-500: #d946ef;
+  --color-secondary-600: #c026d3;
+  --color-secondary-700: #a21caf;
+  --color-secondary-900: #701a75;
+
+  /* Cyan tertiary ramp */
+  --color-cyan-300: #67e8f9;
   --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
   --color-cyan-600: #0891b2;
+
+  /* Amber pop */
   --color-amber-400: #fbbf24;
 
   /* Type scale (modular ~1.25, 6 sizes) */
@@ -39,6 +64,12 @@
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
 
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
   /* Spacing scale (7 values) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -48,164 +79,209 @@
   --space-8: 2rem;
   --space-12: 3rem;
 
-  /* Border radii (3) */
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* Border radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
   --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
 
   /* Transitions */
   --duration-fast: 120ms;
   --duration-base: 200ms;
+  --duration-slow: 320ms;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Font stacks */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Font stacks (system-ui, no web fonts) */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   --font-mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Brand gradients (theme-independent, decorative) */
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-violet-500) 40%,
+    var(--color-secondary-500) 70%,
+    var(--color-cyan-500) 100%
+  );
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary-600) 0%,
+    var(--color-violet-600) 100%
+  );
 
   /* ---------------------------------------------------------------------
    * Semantic aliases + shadows (light defaults)
    * ------------------------------------------------------------------- */
-  --surface: var(--color-neutral-50);
-  --surface-raised: var(--color-neutral-0);
-  --text: var(--color-neutral-900);
-  --text-muted: var(--color-neutral-500);
-  --border: var(--color-neutral-200);
-  --accent: var(--color-accent-500);
-  --accent-contrast: var(--color-neutral-0);
-  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.08);
-  --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.12);
+  --surface: var(--color-slate-50);
+  --surface-raised: var(--color-slate-0);
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --text: var(--color-slate-900);
+  --text-muted: var(--color-slate-600);
+  --border: var(--color-slate-200);
+  --border-strong: var(--color-slate-300);
+  --accent: var(--color-primary-600);
+  --accent-hover: var(--color-primary-700);
+  --accent-contrast: var(--color-slate-0);
+  --accent-soft: var(--color-primary-50);
 
-  /* Playful splash gradient tokens (light) */
-  --splash-gradient: linear-gradient(
-    120deg,
-    var(--color-accent-300) 0%,
-    var(--color-violet-400) 35%,
-    var(--color-pink-400) 70%,
-    var(--color-cyan-400) 100%
-  );
-  --splash-blob-1: var(--color-pink-400);
-  --splash-blob-2: var(--color-cyan-400);
-  --splash-blob-3: var(--color-violet-400);
+  /* Badge semantic tokens */
+  --badge-neutral-bg: var(--color-slate-100);
+  --badge-neutral-text: var(--color-slate-700);
+  --badge-accent-bg: var(--color-primary-100);
+  --badge-accent-text: var(--color-primary-700);
+
+  /* Layered, indigo-tinted shadows */
+  --shadow-sm: 0 1px 2px rgba(30, 41, 59, 0.06), 0 1px 1px rgba(79, 70, 229, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(30, 41, 59, 0.08), 0 2px 8px -2px rgba(79, 70, 229, 0.1);
+  --shadow-lg: 0 12px 24px -6px rgba(30, 41, 59, 0.12), 0 8px 20px -8px rgba(79, 70, 229, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.35);
+
+  /* Splash gradient tokens (light) */
+  --splash-gradient: var(--gradient-brand);
+  --splash-blob-1: var(--color-secondary-500);
+  --splash-blob-2: var(--color-cyan-500);
+  --splash-blob-3: var(--color-violet-500);
   --splash-title-gradient: linear-gradient(
     90deg,
-    var(--color-accent-700),
+    var(--color-primary-700),
     var(--color-violet-600),
-    var(--color-pink-600)
+    var(--color-secondary-600)
   );
-  --splash-title-fallback: var(--color-neutral-900);
+  --splash-title-fallback: var(--color-slate-900);
   --splash-confetti-1: var(--color-amber-400);
-  --splash-confetti-2: var(--color-cyan-600);
-  --splash-confetti-3: var(--color-pink-600);
-  --splash-confetti-4: var(--color-neutral-0);
+  --splash-confetti-2: var(--color-cyan-400);
+  --splash-confetti-3: var(--color-secondary-500);
+  --splash-confetti-4: var(--color-slate-0);
 }
 
 /* Dark theme via OS preference (no explicit choice made yet) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface: var(--color-neutral-900);
-    --surface-raised: var(--color-neutral-700);
-    --text: var(--color-neutral-50);
-    --text-muted: var(--color-neutral-300);
-    --border: var(--color-neutral-700);
-    --accent: var(--color-accent-300);
-    --accent-contrast: var(--color-neutral-900);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --surface: var(--color-slate-900);
+    --surface-raised: var(--color-slate-800);
+    --surface-glass: rgba(30, 41, 59, 0.62);
+    --text: var(--color-slate-50);
+    --text-muted: var(--color-slate-400);
+    --border: var(--color-slate-700);
+    --border-strong: var(--color-slate-600);
+    --accent: var(--color-primary-400);
+    --accent-hover: var(--color-primary-300);
+    --accent-contrast: var(--color-slate-950);
+    --accent-soft: rgba(99, 102, 241, 0.16);
 
-    /* Playful splash gradient tokens (dark: deeper shades) */
-    --splash-gradient: linear-gradient(
-      120deg,
-      var(--color-accent-700) 0%,
-      var(--color-violet-600) 35%,
-      var(--color-pink-600) 70%,
-      var(--color-cyan-600) 100%
-    );
-    --splash-blob-1: var(--color-pink-600);
-    --splash-blob-2: var(--color-cyan-600);
-    --splash-blob-3: var(--color-violet-600);
+    --badge-neutral-bg: var(--color-slate-800);
+    --badge-neutral-text: var(--color-slate-100);
+    --badge-accent-bg: var(--color-primary-900);
+    --badge-accent-text: var(--color-primary-200);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(129, 140, 248, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(99, 102, 241, 0.14);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 22px rgba(99, 102, 241, 0.2);
+    --shadow-focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
+
+    /* Splash gradient tokens (dark) */
+    --splash-gradient: var(--gradient-brand);
+    --splash-blob-1: var(--color-secondary-500);
+    --splash-blob-2: var(--color-cyan-500);
+    --splash-blob-3: var(--color-violet-500);
     --splash-title-gradient: linear-gradient(
       90deg,
-      var(--color-accent-300),
+      var(--color-primary-300),
       var(--color-violet-400),
-      var(--color-pink-400)
+      var(--color-secondary-400)
     );
-    --splash-title-fallback: var(--color-neutral-50);
+    --splash-title-fallback: var(--color-slate-50);
     --splash-confetti-1: var(--color-amber-400);
     --splash-confetti-2: var(--color-cyan-400);
-    --splash-confetti-3: var(--color-pink-400);
-    --splash-confetti-4: var(--color-neutral-0);
+    --splash-confetti-3: var(--color-secondary-500);
+    --splash-confetti-4: var(--color-slate-0);
   }
 }
 
 /* Explicit light choice re-asserts light values so it beats OS dark */
 [data-theme="light"] {
-  --surface: var(--color-neutral-50);
-  --surface-raised: var(--color-neutral-0);
-  --text: var(--color-neutral-900);
-  --text-muted: var(--color-neutral-500);
-  --border: var(--color-neutral-200);
-  --accent: var(--color-accent-500);
-  --accent-contrast: var(--color-neutral-0);
-  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.08);
-  --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.12);
+  --surface: var(--color-slate-50);
+  --surface-raised: var(--color-slate-0);
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --text: var(--color-slate-900);
+  --text-muted: var(--color-slate-600);
+  --border: var(--color-slate-200);
+  --border-strong: var(--color-slate-300);
+  --accent: var(--color-primary-600);
+  --accent-hover: var(--color-primary-700);
+  --accent-contrast: var(--color-slate-0);
+  --accent-soft: var(--color-primary-50);
 
-  /* Playful splash gradient tokens (light) */
-  --splash-gradient: linear-gradient(
-    120deg,
-    var(--color-accent-300) 0%,
-    var(--color-violet-400) 35%,
-    var(--color-pink-400) 70%,
-    var(--color-cyan-400) 100%
-  );
-  --splash-blob-1: var(--color-pink-400);
-  --splash-blob-2: var(--color-cyan-400);
-  --splash-blob-3: var(--color-violet-400);
+  --badge-neutral-bg: var(--color-slate-100);
+  --badge-neutral-text: var(--color-slate-700);
+  --badge-accent-bg: var(--color-primary-100);
+  --badge-accent-text: var(--color-primary-700);
+
+  --shadow-sm: 0 1px 2px rgba(30, 41, 59, 0.06), 0 1px 1px rgba(79, 70, 229, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(30, 41, 59, 0.08), 0 2px 8px -2px rgba(79, 70, 229, 0.1);
+  --shadow-lg: 0 12px 24px -6px rgba(30, 41, 59, 0.12), 0 8px 20px -8px rgba(79, 70, 229, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.35);
+
+  /* Splash gradient tokens (light) */
+  --splash-gradient: var(--gradient-brand);
+  --splash-blob-1: var(--color-secondary-500);
+  --splash-blob-2: var(--color-cyan-500);
+  --splash-blob-3: var(--color-violet-500);
   --splash-title-gradient: linear-gradient(
     90deg,
-    var(--color-accent-700),
+    var(--color-primary-700),
     var(--color-violet-600),
-    var(--color-pink-600)
+    var(--color-secondary-600)
   );
-  --splash-title-fallback: var(--color-neutral-900);
+  --splash-title-fallback: var(--color-slate-900);
   --splash-confetti-1: var(--color-amber-400);
-  --splash-confetti-2: var(--color-cyan-600);
-  --splash-confetti-3: var(--color-pink-600);
-  --splash-confetti-4: var(--color-neutral-0);
+  --splash-confetti-2: var(--color-cyan-400);
+  --splash-confetti-3: var(--color-secondary-500);
+  --splash-confetti-4: var(--color-slate-0);
 }
 
 /* Explicit dark choice */
 [data-theme="dark"] {
-  --surface: var(--color-neutral-900);
-  --surface-raised: var(--color-neutral-700);
-  --text: var(--color-neutral-50);
-  --text-muted: var(--color-neutral-300);
-  --border: var(--color-neutral-700);
-  --accent: var(--color-accent-300);
-  --accent-contrast: var(--color-neutral-900);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --surface: var(--color-slate-900);
+  --surface-raised: var(--color-slate-800);
+  --surface-glass: rgba(30, 41, 59, 0.62);
+  --text: var(--color-slate-50);
+  --text-muted: var(--color-slate-400);
+  --border: var(--color-slate-700);
+  --border-strong: var(--color-slate-600);
+  --accent: var(--color-primary-400);
+  --accent-hover: var(--color-primary-300);
+  --accent-contrast: var(--color-slate-950);
+  --accent-soft: rgba(99, 102, 241, 0.16);
 
-  /* Playful splash gradient tokens (dark: deeper shades) */
-  --splash-gradient: linear-gradient(
-    120deg,
-    var(--color-accent-700) 0%,
-    var(--color-violet-600) 35%,
-    var(--color-pink-600) 70%,
-    var(--color-cyan-600) 100%
-  );
-  --splash-blob-1: var(--color-pink-600);
-  --splash-blob-2: var(--color-cyan-600);
-  --splash-blob-3: var(--color-violet-600);
+  --badge-neutral-bg: var(--color-slate-800);
+  --badge-neutral-text: var(--color-slate-100);
+  --badge-accent-bg: var(--color-primary-900);
+  --badge-accent-text: var(--color-primary-200);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(129, 140, 248, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(99, 102, 241, 0.14);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 22px rgba(99, 102, 241, 0.2);
+  --shadow-focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
+
+  /* Splash gradient tokens (dark) */
+  --splash-gradient: var(--gradient-brand);
+  --splash-blob-1: var(--color-secondary-500);
+  --splash-blob-2: var(--color-cyan-500);
+  --splash-blob-3: var(--color-violet-500);
   --splash-title-gradient: linear-gradient(
     90deg,
-    var(--color-accent-300),
+    var(--color-primary-300),
     var(--color-violet-400),
-    var(--color-pink-400)
+    var(--color-secondary-400)
   );
-  --splash-title-fallback: var(--color-neutral-50);
+  --splash-title-fallback: var(--color-slate-50);
   --splash-confetti-1: var(--color-amber-400);
   --splash-confetti-2: var(--color-cyan-400);
-  --splash-confetti-3: var(--color-pink-400);
-  --splash-confetti-4: var(--color-neutral-0);
+  --splash-confetti-3: var(--color-secondary-500);
+  --splash-confetti-4: var(--color-slate-0);
 }

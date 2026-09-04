@@ -2,18 +2,19 @@
   display: inline-flex;
   align-items: center;
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.01em;
   line-height: var(--line-height-tight);
-  border-radius: var(--radius-sm);
-  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-3);
 }
 
 .badge--neutral {
-  background-color: var(--color-neutral-100);
-  color: var(--text);
+  background-color: var(--badge-neutral-bg);
+  color: var(--badge-neutral-text);
 }
 
 .badge--accent {
-  background-color: var(--color-accent-100);
-  color: var(--color-accent-700);
+  background-color: var(--badge-accent-bg);
+  color: var(--badge-accent-text);
 }
