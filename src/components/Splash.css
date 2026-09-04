@@ -1,0 +1,263 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  overflow: hidden;
+  background-color: var(--surface);
+  animation: splash-fade var(--duration-base) var(--ease-standard) both;
+}
+
+/* Full-bleed animated colour gradient covering the whole viewport. */
+.splash__gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--splash-gradient);
+  background-size: 220% 220%;
+  background-position: 0% 50%;
+  animation: splash-gradient-shift calc(var(--duration-base) * 60) var(--ease-standard)
+    infinite alternate;
+}
+
+/* Soft moving colour blobs layered over the gradient. */
+.splash__blobs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.splash__blob {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  filter: blur(var(--space-12));
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.splash__blob--1 {
+  top: -12vmax;
+  left: -8vmax;
+  background: radial-gradient(circle at center, var(--splash-blob-1), transparent 70%);
+  animation: splash-blob-float calc(var(--duration-base) * 45) var(--ease-standard)
+    infinite alternate;
+}
+
+.splash__blob--2 {
+  right: -14vmax;
+  bottom: -10vmax;
+  background: radial-gradient(circle at center, var(--splash-blob-2), transparent 70%);
+  animation: splash-blob-float calc(var(--duration-base) * 55) var(--ease-standard)
+    infinite alternate;
+  animation-delay: calc(var(--duration-base) * -12);
+}
+
+.splash__blob--3 {
+  top: 30%;
+  left: 50%;
+  background: radial-gradient(circle at center, var(--splash-blob-3), transparent 70%);
+  animation: splash-blob-float calc(var(--duration-base) * 50) var(--ease-standard)
+    infinite alternate;
+  animation-delay: calc(var(--duration-base) * -24);
+}
+
+/* Confetti-like dots orbiting the wordmark. */
+.splash__confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.splash__dot {
+  position: absolute;
+  width: var(--space-3);
+  height: var(--space-3);
+  border-radius: 50%;
+  opacity: 0.9;
+  box-shadow: var(--shadow-sm);
+  animation: splash-confetti-drift calc(var(--duration-base) * 24) var(--ease-standard)
+    infinite alternate;
+  animation-delay: calc(var(--i) * 140ms);
+}
+
+.splash__dot:nth-child(1) {
+  top: 18%;
+  left: 16%;
+  background-color: var(--splash-confetti-1);
+}
+.splash__dot:nth-child(2) {
+  top: 26%;
+  right: 20%;
+  width: var(--space-4);
+  height: var(--space-4);
+  background-color: var(--splash-confetti-2);
+}
+.splash__dot:nth-child(3) {
+  top: 62%;
+  left: 22%;
+  width: var(--space-2);
+  height: var(--space-2);
+  background-color: var(--splash-confetti-3);
+}
+.splash__dot:nth-child(4) {
+  bottom: 20%;
+  right: 24%;
+  background-color: var(--splash-confetti-4);
+}
+.splash__dot:nth-child(5) {
+  top: 12%;
+  left: 48%;
+  width: var(--space-2);
+  height: var(--space-2);
+  background-color: var(--splash-confetti-2);
+}
+.splash__dot:nth-child(6) {
+  bottom: 16%;
+  left: 40%;
+  width: var(--space-4);
+  height: var(--space-4);
+  background-color: var(--splash-confetti-1);
+}
+.splash__dot:nth-child(7) {
+  top: 44%;
+  right: 12%;
+  background-color: var(--splash-confetti-3);
+}
+.splash__dot:nth-child(8) {
+  bottom: 34%;
+  left: 10%;
+  width: var(--space-2);
+  height: var(--space-2);
+  background-color: var(--splash-confetti-4);
+}
+
+/* Content column sits above every decorative layer. */
+.splash__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  text-align: center;
+}
+
+.splash__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.03em;
+  color: var(--splash-title-fallback);
+}
+
+.splash__letter {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  background: var(--splash-title-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: splash-letter-pop var(--duration-base) var(--ease-emphasized) both;
+  animation-delay: calc(var(--i) * 60ms);
+}
+
+.splash__skip {
+  position: relative;
+}
+
+@keyframes splash-fade {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-2));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Energetic pop/spring entrance for each letter. */
+@keyframes splash-letter-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--space-6)) scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(calc(var(--space-1) * -1)) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes splash-gradient-shift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes splash-blob-float {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(var(--space-12), calc(var(--space-8) * -1), 0) scale(1.15);
+  }
+}
+
+@keyframes splash-confetti-drift {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(calc(var(--space-6) * -1)) rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash,
+  .splash__letter,
+  .splash__gradient,
+  .splash__blob,
+  .splash__dot {
+    animation: none;
+  }
+
+  .splash {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Snap to a static but still colourful resting composition. */
+  .splash__letter {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .splash__gradient {
+    background-position: 50% 50%;
+  }
+
+  .splash__blob {
+    transform: none;
+  }
+
+  .splash__dot {
+    transform: none;
+  }
+}
