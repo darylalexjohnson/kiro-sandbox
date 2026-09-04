@@ -1,16 +1,30 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Splash, Stack } from './components'
+import { BackgroundFX, Badge, Button, Card, Splash, Stack } from './components'
 import { useTheme } from './hooks/useTheme'
 import './App.css'
+
+// Large finite timer so the splash stays pinned for deterministic screenshots
+// (`setTimeout` coerces `Infinity` unreliably, often firing immediately).
+const SPLASH_PIN_MS = 60 * 60 * 1000
 
 function App() {
   const { theme, toggleTheme } = useTheme()
   const isDark = theme === 'dark'
-  const [showSplash, setShowSplash] = useState(true)
+  // Screenshot capture hook: `?screenshot=splash` pins the splash on screen,
+  // `?screenshot=landing` starts with it dismissed. Any other value (including
+  // none) keeps the default behaviour for real users.
+  const screenshotView = new URLSearchParams(window.location.search).get('screenshot')
+  const [showSplash, setShowSplash] = useState(screenshotView !== 'landing')
 
   return (
     <>
-      {showSplash && <Splash onDismiss={() => setShowSplash(false)} />}
+      <BackgroundFX />
+      {showSplash && (
+        <Splash
+          onDismiss={() => setShowSplash(false)}
+          durationMs={screenshotView === 'splash' ? SPLASH_PIN_MS : undefined}
+        />
+      )}
       <main className="app">
         <div className="app__inner">
           <div className="app__toolbar">

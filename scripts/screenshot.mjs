@@ -49,15 +49,20 @@ try {
     )
 
     const page = await context.newPage()
-    await page.goto(BASE_URL, { waitUntil: 'networkidle' })
 
     if (shot.view === 'splash') {
-      // The splash auto-dismisses at ~2200ms; capture it well before that,
-      // once the entrance animation has settled.
+      // `?screenshot=splash` pins the splash on screen (no auto-dismiss), so the
+      // capture is deterministic instead of racing the timer. `domcontentloaded`
+      // keeps cold-start latency from pushing us past any timer.
+      await page.goto(`${BASE_URL}/?screenshot=splash`, { waitUntil: 'domcontentloaded' })
       await page.waitForSelector('.splash', { state: 'visible', timeout: 5000 })
-      await page.waitForTimeout(1000)
+      // Short settle for the entrance animation to lay out before we freeze it.
+      await page.waitForTimeout(400)
     } else {
-      // Dismiss the splash immediately, then wait for the landing to render.
+      // `?screenshot=landing` starts with the splash already dismissed, so the
+      // landing renders immediately — no dependency on clicking Skip.
+      await page.goto(`${BASE_URL}/?screenshot=landing`, { waitUntil: 'domcontentloaded' })
+      // Graceful fallback: dismiss a Skip button if one is somehow present.
       const skip = page.getByRole('button', { name: 'Skip' })
       if (await skip.count()) {
         await skip.click()
