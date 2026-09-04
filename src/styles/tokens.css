@@ -156,6 +156,15 @@
   --splash-confetti-2: var(--color-cyan-400);
   --splash-confetti-3: var(--color-secondary-500);
   --splash-confetti-4: var(--color-slate-0);
+
+  /* Splash legibility tokens (theme-independent — the gradient is fixed) */
+  --splash-title-fill: var(--color-slate-0);
+  --splash-title-shadow: 0 2px 10px rgba(2, 6, 23, 0.55), 0 1px 3px rgba(2, 6, 23, 0.7);
+  --splash-scrim: rgba(2, 6, 23, 0.5);
+  --splash-skip-bg: rgba(2, 6, 23, 0.55);
+  --splash-skip-bg-hover: rgba(2, 6, 23, 0.7);
+  --splash-skip-text: var(--color-slate-0);
+  --splash-skip-border: rgba(255, 255, 255, 0.6);
 }
 
 /* Dark theme via OS preference (no explicit choice made yet) */
@@ -199,6 +208,15 @@
     --splash-confetti-2: var(--color-cyan-400);
     --splash-confetti-3: var(--color-secondary-500);
     --splash-confetti-4: var(--color-slate-0);
+
+    /* Splash legibility tokens (theme-independent — the gradient is fixed) */
+    --splash-title-fill: var(--color-slate-0);
+    --splash-title-shadow: 0 2px 10px rgba(2, 6, 23, 0.55), 0 1px 3px rgba(2, 6, 23, 0.7);
+    --splash-scrim: rgba(2, 6, 23, 0.5);
+    --splash-skip-bg: rgba(2, 6, 23, 0.55);
+    --splash-skip-bg-hover: rgba(2, 6, 23, 0.7);
+    --splash-skip-text: var(--color-slate-0);
+    --splash-skip-border: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -242,6 +260,15 @@
   --splash-confetti-2: var(--color-cyan-400);
   --splash-confetti-3: var(--color-secondary-500);
   --splash-confetti-4: var(--color-slate-0);
+
+  /* Splash legibility tokens (theme-independent — the gradient is fixed) */
+  --splash-title-fill: var(--color-slate-0);
+  --splash-title-shadow: 0 2px 10px rgba(2, 6, 23, 0.55), 0 1px 3px rgba(2, 6, 23, 0.7);
+  --splash-scrim: rgba(2, 6, 23, 0.5);
+  --splash-skip-bg: rgba(2, 6, 23, 0.55);
+  --splash-skip-bg-hover: rgba(2, 6, 23, 0.7);
+  --splash-skip-text: var(--color-slate-0);
+  --splash-skip-border: rgba(255, 255, 255, 0.6);
 }
 
 /* Explicit dark choice */
@@ -284,4 +311,13 @@
   --splash-confetti-2: var(--color-cyan-400);
   --splash-confetti-3: var(--color-secondary-500);
   --splash-confetti-4: var(--color-slate-0);
+
+  /* Splash legibility tokens (theme-independent — the gradient is fixed) */
+  --splash-title-fill: var(--color-slate-0);
+  --splash-title-shadow: 0 2px 10px rgba(2, 6, 23, 0.55), 0 1px 3px rgba(2, 6, 23, 0.7);
+  --splash-scrim: rgba(2, 6, 23, 0.5);
+  --splash-skip-bg: rgba(2, 6, 23, 0.55);
+  --splash-skip-bg-hover: rgba(2, 6, 23, 0.7);
+  --splash-skip-text: var(--color-slate-0);
+  --splash-skip-border: rgba(255, 255, 255, 0.6);
 }
