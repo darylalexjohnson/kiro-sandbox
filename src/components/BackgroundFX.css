@@ -6,6 +6,28 @@
   overflow: hidden;
 }
 
+/* Faint static grid (pseudo-element, no DOM node). */
+.bg-fx::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.5;
+  -webkit-mask: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 75%);
+          mask: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* Soft vignette to seat content over the mesh. */
+.bg-fx::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 20%, transparent 55%, var(--surface) 100%);
+}
+
 .bg-fx__blob {
   position: absolute;
   width: 46vmax;
@@ -14,55 +36,59 @@
   filter: blur(80px);
   opacity: 0.55;
   mix-blend-mode: screen;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 .bg-fx__blob--1 {
   top: -12vmax;
   left: -8vmax;
   background: radial-gradient(circle at center, var(--color-primary-500), transparent 70%);
-  animation: bg-fx-drift-a 22s var(--ease-standard) infinite alternate;
-  animation-delay: -8s;
+  animation: bg-fx-breathe-a var(--duration-breathe) var(--ease-standard) infinite alternate;
+  animation-delay: -6s;
 }
 
 .bg-fx__blob--2 {
   right: -14vmax;
   top: -6vmax;
-  background: radial-gradient(circle at center, var(--color-secondary-500), transparent 70%);
-  animation: bg-fx-drift-b 28s var(--ease-standard) infinite alternate;
-  animation-delay: -16s;
+  background: radial-gradient(circle at center, var(--color-blue-500), transparent 70%);
+  animation: bg-fx-breathe-b var(--duration-breathe-2) var(--ease-standard) infinite alternate;
+  animation-delay: -14s;
 }
 
 .bg-fx__blob--3 {
   bottom: -12vmax;
   left: 20%;
   background: radial-gradient(circle at center, var(--color-cyan-500), transparent 70%);
-  animation: bg-fx-drift-a 34s var(--ease-standard) infinite alternate;
-  animation-delay: -24s;
+  animation: bg-fx-breathe-a var(--duration-breathe-3) var(--ease-standard) infinite alternate;
+  animation-delay: -22s;
 }
 
 .bg-fx__blob--4 {
   right: -10vmax;
   bottom: -14vmax;
   background: radial-gradient(circle at center, var(--color-violet-500), transparent 70%);
-  animation: bg-fx-drift-b 40s var(--ease-standard) infinite alternate;
+  animation: bg-fx-breathe-b var(--duration-breathe-4) var(--ease-standard) infinite alternate;
 }
 
-@keyframes bg-fx-drift-a {
+@keyframes bg-fx-breathe-a {
   from {
     transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
   }
   to {
-    transform: translate3d(8vmax, 6vmax, 0) scale(1.15);
+    transform: translate3d(6vmax, 5vmax, 0) scale(1.18);
+    opacity: 0.6;
   }
 }
 
-@keyframes bg-fx-drift-b {
+@keyframes bg-fx-breathe-b {
   from {
-    transform: translate3d(0, 0, 0) scale(1.1);
+    transform: translate3d(0, 0, 0) scale(1.12);
+    opacity: 0.55;
   }
   to {
-    transform: translate3d(-7vmax, -5vmax, 0) scale(0.95);
+    transform: translate3d(-6vmax, -4vmax, 0) scale(0.94);
+    opacity: 0.42;
   }
 }
 

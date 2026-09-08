@@ -20,9 +20,14 @@ body {
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
+  letter-spacing: -0.006em;
   color: var(--text);
   background-color: var(--surface);
+  background-image: var(--surface-gradient);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition:
     color var(--duration-base) var(--ease-standard),
     background-color var(--duration-base) var(--ease-standard);
