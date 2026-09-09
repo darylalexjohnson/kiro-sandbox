@@ -1,0 +1,103 @@
+name: Accessibility
+
+# Builds the real app, serves it, and scans it with @axe-core/playwright +
+# Chromium against WCAG 2.0/2.1 A + AA rules. The consolidated report is
+# committed back to the branch (so reviewers see the findings on the PR) and
+# uploaded as an artifact. The job fails when any serious/critical violation is
+# found, so this workflow is a genuine accessibility gate. The authoring sandbox
+# has no npm registry access, so this is the only place the running app can be
+# scanned.
+
+on:
+  push:
+    branches: ["**"]
+    # Don't re-run when this job commits the report back.
+    paths-ignore:
+      - "docs/a11y/**"
+  workflow_dispatch:
+
+# Needed to push the report commit back to the branch.
+permissions:
+  contents: write
+
+concurrency:
+  group: a11y-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: Install Playwright + axe (ad hoc, not committed)
+        run: |
+          npm install -D @axe-core/playwright axe-core playwright
+          npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve bundle and scan
+        env:
+          BASE_URL: http://127.0.0.1:4173
+          OUT_DIR: docs/a11y
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 &
+          SERVER_PID=$!
+          # Wait for the preview server to answer.
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:4173 >/dev/null; then
+              echo "preview server is up"; break
+            fi
+            sleep 1
+          done
+          node scripts/a11y.mjs
+          kill "$SERVER_PID" 2>/dev/null || true
+
+      - name: Commit a11y report back to the branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/a11y/accessibility-report.json docs/a11y/accessibility-report.md
+          if git diff --staged --quiet; then
+            echo "No accessibility report changes to commit."
+          else
+            git commit -m "chore: update accessibility report [skip ci]"
+            git push
+          fi
+
+      - name: Upload a11y report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-report
+          path: docs/a11y/
+
+      - name: Enforce (fail on serious/critical violations)
+        if: always()
+        run: |
+          REPORT=docs/a11y/accessibility-report.json
+          if [ ! -f "$REPORT" ]; then
+            echo "Accessibility report not found at $REPORT"
+            exit 1
+          fi
+          HAS_CRITICAL=$(node -e "const r=require('./docs/a11y/accessibility-report.json');process.stdout.write(String(r.hasCritical))")
+          echo "hasCritical=$HAS_CRITICAL"
+          if [ "$HAS_CRITICAL" = "true" ]; then
+            echo "Serious or critical accessibility violations found. Failing the job."
+            exit 1
+          fi
+          echo "No serious or critical accessibility violations."

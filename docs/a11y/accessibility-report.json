@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-09-09T04:39:22.510Z",
+  "baseUrl": "http://127.0.0.1:4173",
+  "wcagTags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa"
+  ],
+  "hasCritical": false,
+  "totals": {
+    "minor": 0,
+    "moderate": 0,
+    "serious": 0,
+    "critical": 0
+  },
+  "states": [
+    {
+      "state": "landing-light-desktop",
+      "view": "landing",
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=landing",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    },
+    {
+      "state": "landing-dark-desktop",
+      "view": "landing",
+      "theme": "dark",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=landing",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    },
+    {
+      "state": "landing-light-mobile",
+      "view": "landing",
+      "theme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=landing",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    },
+    {
+      "state": "landing-dark-mobile",
+      "view": "landing",
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=landing",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    },
+    {
+      "state": "splash-light-desktop",
+      "view": "splash",
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=splash",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    },
+    {
+      "state": "splash-dark-desktop",
+      "view": "splash",
+      "theme": "dark",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:4173/?screenshot=splash",
+      "counts": {
+        "minor": 0,
+        "moderate": 0,
+        "serious": 0,
+        "critical": 0
+      },
+      "violations": []
+    }
+  ]
+}
