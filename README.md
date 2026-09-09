@@ -78,10 +78,12 @@ reproduction of the splash also lives at
 ├── vite.config.ts
 ├── vitest.config.ts
 ├── docs/
+│   ├── a11y/               # axe accessibility report written/committed by CI
 │   ├── preview/
 │   │   └── splash-preview.html   # dependency-free static splash reproduction
 │   └── screenshots/              # PNGs captured/committed by CI
 ├── scripts/
+│   ├── a11y.mjs            # @axe-core/playwright scan script (runs in CI)
 │   └── screenshot.mjs      # Playwright capture script (runs in CI)
 └── src/
     ├── main.tsx            # React 18 entry (createRoot)
@@ -183,6 +185,37 @@ npm test            # run once (vitest run)
 npm run test:watch  # watch mode
 ```
 
+## Accessibility
+
+Accessibility is tested with [axe](https://github.com/dequelabs/axe-core) in two
+complementary layers:
+
+- **Layer 1 — component-level axe assertions (in the Vitest suite).**
+  [`jest-axe`](https://github.com/nickcolley/jest-axe) is registered as a Vitest
+  matcher in `src/test/setup.ts` (`expect.extend(toHaveNoViolations)`) and each
+  component is rendered in representative states and asserted with
+  `expect(await axe(container)).toHaveNoViolations()`. Specs live alongside the
+  existing tests as `*.a11y.test.tsx` under `src/components/__tests__/` (Button,
+  Badge, Card, Stack, Splash) and `src/__tests__/App.a11y.test.tsx` (the full app
+  before and after the splash is dismissed). These run as part of `npm test` /
+  the CI job. Because jsdom has no layout engine, axe cannot evaluate the
+  `color-contrast` rule here — Layer 1 catches structural/semantic issues (roles,
+  accessible names, ARIA validity, duplicate IDs, etc.); contrast is covered by
+  Layer 2.
+
+- **Layer 2 — full-page axe scans against the real built app (CI only).**
+  `scripts/a11y.mjs` uses
+  [`@axe-core/playwright`](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright)
+  with headless Chromium to scan the served production bundle across light/dark
+  and desktop/mobile landing states plus the splash, tagging WCAG 2.0/2.1 A + AA
+  rules. It writes a consolidated report to
+  [`docs/a11y/accessibility-report.json`](docs/a11y/) and a human-readable
+  `docs/a11y/accessibility-report.md`. The Layer-2 dependencies
+  (`@axe-core/playwright`, `playwright`) are **not** committed to `package.json`;
+  they are installed ad hoc in the workflow (like the Screenshots job). The job
+  fails on any **serious** or **critical** violation, so it acts as a genuine
+  gate.
+
 ## Continuous integration
 
 Because the authoring sandbox has no npm registry access, dependencies are
@@ -197,3 +230,9 @@ installed and the app is built, tested, and screenshotted on GitHub Actions
   real browser, and commits the captured PNGs back into
   [`docs/screenshots/`](docs/screenshots/) (with a `[skip ci]` commit so it
   doesn't retrigger itself).
+- **Accessibility** (`.github/workflows/accessibility.yml`) — installs deps and
+  `@axe-core/playwright`/Chromium (ad hoc, not committed), builds and serves the
+  bundle, runs `scripts/a11y.mjs` to scan every state, commits the report back
+  into [`docs/a11y/`](docs/a11y/) (with a `[skip ci]` commit so it doesn't
+  retrigger itself), uploads it as an artifact, and fails the job on any
+  serious/critical violation.
