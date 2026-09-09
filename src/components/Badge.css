@@ -1,10 +1,12 @@
 .badge {
+  position: relative;
   display: inline-flex;
   align-items: center;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.01em;
   line-height: var(--line-height-tight);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-pill);
   padding: var(--space-1) var(--space-3);
 }
@@ -17,4 +19,19 @@
 .badge--accent {
   background-color: var(--badge-accent-bg);
   color: var(--badge-accent-text);
+}
+
+/* Faint iridescent ring on the accent pill (pseudo-element, DOM-stable). */
+.badge--accent::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-iris);
+  opacity: 0.6;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
 }

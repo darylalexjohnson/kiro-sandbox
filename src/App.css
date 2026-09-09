@@ -55,9 +55,54 @@
   color: var(--text-muted);
 }
 
+.app__card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
 .app__card-text {
   font-size: var(--font-size-base);
   color: var(--text-muted);
+}
+
+/* Bento grid: mobile-first single column. */
+.app__bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+/* 640px: two columns. */
+@media (min-width: 40rem) {
+  .app__bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 1024px: 6-column bento with spanning tiles. */
+@media (min-width: 64rem) {
+  .app__bento {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(0, auto);
+  }
+
+  .app__bento > :nth-child(1) {
+    grid-column: span 4;
+  }
+
+  .app__bento > :nth-child(2) {
+    grid-column: span 2;
+  }
+
+  .app__bento > :nth-child(3) {
+    grid-column: span 3;
+  }
+
+  .app__bento > :nth-child(4) {
+    grid-column: span 3;
+  }
 }
 
 /* Wide desktop: two-column hero fills the horizontal space. */
@@ -65,5 +110,6 @@
   .app__hero {
     grid-template-columns: 1.1fr 0.9fr;
     gap: var(--space-12);
+    align-items: start;
   }
 }

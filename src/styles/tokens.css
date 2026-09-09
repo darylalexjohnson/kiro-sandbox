@@ -50,6 +50,13 @@
   --color-cyan-500: #06b6d4;
   --color-cyan-600: #0891b2;
 
+  /* Blue ramp (bridges violet→cyan in the iris gradient) */
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+
   /* Amber pop */
   --color-amber-400: #fbbf24;
 
@@ -84,6 +91,7 @@
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 24px;
+  --radius-2xl: 28px;
   --radius-pill: 999px;
 
   /* Transitions */
@@ -94,23 +102,35 @@
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* Frosted-glass + breathing-mesh scalars (theme-independent) */
+  --glass-blur: 16px;
+  --glass-blur-strong: 22px;
+  --duration-breathe: 26s;   /* base mesh loop */
+  --duration-breathe-2: 32s;
+  --duration-breathe-3: 38s;
+  --duration-breathe-4: 30s;
+
   /* Font stacks (system-ui, no web fonts) */
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   --font-mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Brand gradients (theme-independent, decorative) */
-  --gradient-brand: linear-gradient(
-    135deg,
-    var(--color-primary-500) 0%,
-    var(--color-violet-500) 40%,
-    var(--color-secondary-500) 70%,
-    var(--color-cyan-500) 100%
+  /* Decorative iridescent brand gradient: violet → indigo → blue → cyan */
+  --gradient-iris: linear-gradient(
+    120deg,
+    var(--color-violet-600) 0%,
+    var(--color-primary-500) 24%,
+    var(--color-blue-500) 52%,
+    var(--color-cyan-400) 80%,
+    var(--color-cyan-300) 100%
   );
+  --gradient-brand: var(--gradient-iris); /* used by title + splash */
+  /* AA-safe (dark stops only) gradient for primary button text backgrounds */
   --gradient-primary: linear-gradient(
     135deg,
-    var(--color-primary-600) 0%,
-    var(--color-violet-600) 100%
+    var(--color-violet-600) 0%,     /* #7c3aed */
+    var(--color-primary-600) 50%,   /* #4f46e5 */
+    var(--color-blue-600) 100%      /* #2563eb */
   );
 
   /* ---------------------------------------------------------------------
@@ -118,11 +138,14 @@
    * ------------------------------------------------------------------- */
   --surface: var(--color-slate-50);
   --surface-raised: var(--color-slate-0);
-  --surface-glass: rgba(255, 255, 255, 0.72);
+  --surface-glass: rgba(255, 255, 255, 0.64);
+  --surface-gradient: linear-gradient(180deg, var(--color-slate-0) 0%, var(--color-slate-100) 100%);
   --text: var(--color-slate-900);
   --text-muted: var(--color-slate-600);
   --border: var(--color-slate-200);
   --border-strong: var(--color-slate-300);
+  --hairline: rgba(15, 23, 42, 0.10);              /* card structural border */
+  --hairline-highlight: rgba(255, 255, 255, 0.75); /* top inner highlight */
   --accent: var(--color-primary-600);
   --accent-hover: var(--color-primary-700);
   --accent-contrast: var(--color-slate-0);
@@ -134,11 +157,13 @@
   --badge-accent-bg: var(--color-primary-100);
   --badge-accent-text: var(--color-primary-700);
 
-  /* Layered, indigo-tinted shadows */
+  /* Layered, indigo-tinted shadows + ambient/brand glows */
   --shadow-sm: 0 1px 2px rgba(30, 41, 59, 0.06), 0 1px 1px rgba(79, 70, 229, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(30, 41, 59, 0.08), 0 2px 8px -2px rgba(79, 70, 229, 0.1);
-  --shadow-lg: 0 12px 24px -6px rgba(30, 41, 59, 0.12), 0 8px 20px -8px rgba(79, 70, 229, 0.14);
+  --shadow-lg: 0 18px 40px -14px rgba(30, 41, 59, 0.16), 0 8px 20px -10px rgba(79, 70, 229, 0.16);
   --shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.35);
+  --glow-ambient: 0 0 64px -12px rgba(124, 58, 237, 0.22);
+  --glow-brand: 0 10px 34px -10px rgba(99, 102, 241, 0.40);
 
   /* Splash gradient tokens (light) */
   --splash-gradient: var(--gradient-brand);
@@ -172,11 +197,14 @@
   :root {
     --surface: var(--color-slate-900);
     --surface-raised: var(--color-slate-800);
-    --surface-glass: rgba(30, 41, 59, 0.62);
+    --surface-glass: rgba(30, 41, 59, 0.55);
+    --surface-gradient: linear-gradient(180deg, var(--color-slate-950) 0%, var(--color-slate-900) 100%);
     --text: var(--color-slate-50);
     --text-muted: var(--color-slate-400);
     --border: var(--color-slate-700);
     --border-strong: var(--color-slate-600);
+    --hairline: rgba(255, 255, 255, 0.10);
+    --hairline-highlight: rgba(255, 255, 255, 0.08);
     --accent: var(--color-primary-400);
     --accent-hover: var(--color-primary-300);
     --accent-contrast: var(--color-slate-950);
@@ -189,8 +217,10 @@
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(129, 140, 248, 0.05);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(99, 102, 241, 0.14);
-    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 22px rgba(99, 102, 241, 0.2);
+    --shadow-lg: 0 22px 44px -16px rgba(0, 0, 0, 0.62), 0 10px 26px -12px rgba(99, 102, 241, 0.24);
     --shadow-focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
+    --glow-ambient: 0 0 88px -10px rgba(124, 58, 237, 0.38);
+    --glow-brand: 0 10px 38px -8px rgba(129, 140, 248, 0.52);
 
     /* Splash gradient tokens (dark) */
     --splash-gradient: var(--gradient-brand);
@@ -224,11 +254,14 @@
 [data-theme="light"] {
   --surface: var(--color-slate-50);
   --surface-raised: var(--color-slate-0);
-  --surface-glass: rgba(255, 255, 255, 0.72);
+  --surface-glass: rgba(255, 255, 255, 0.64);
+  --surface-gradient: linear-gradient(180deg, var(--color-slate-0) 0%, var(--color-slate-100) 100%);
   --text: var(--color-slate-900);
   --text-muted: var(--color-slate-600);
   --border: var(--color-slate-200);
   --border-strong: var(--color-slate-300);
+  --hairline: rgba(15, 23, 42, 0.10);
+  --hairline-highlight: rgba(255, 255, 255, 0.75);
   --accent: var(--color-primary-600);
   --accent-hover: var(--color-primary-700);
   --accent-contrast: var(--color-slate-0);
@@ -241,8 +274,10 @@
 
   --shadow-sm: 0 1px 2px rgba(30, 41, 59, 0.06), 0 1px 1px rgba(79, 70, 229, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(30, 41, 59, 0.08), 0 2px 8px -2px rgba(79, 70, 229, 0.1);
-  --shadow-lg: 0 12px 24px -6px rgba(30, 41, 59, 0.12), 0 8px 20px -8px rgba(79, 70, 229, 0.14);
+  --shadow-lg: 0 18px 40px -14px rgba(30, 41, 59, 0.16), 0 8px 20px -10px rgba(79, 70, 229, 0.16);
   --shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.35);
+  --glow-ambient: 0 0 64px -12px rgba(124, 58, 237, 0.22);
+  --glow-brand: 0 10px 34px -10px rgba(99, 102, 241, 0.40);
 
   /* Splash gradient tokens (light) */
   --splash-gradient: var(--gradient-brand);
@@ -275,11 +310,14 @@
 [data-theme="dark"] {
   --surface: var(--color-slate-900);
   --surface-raised: var(--color-slate-800);
-  --surface-glass: rgba(30, 41, 59, 0.62);
+  --surface-glass: rgba(30, 41, 59, 0.55);
+  --surface-gradient: linear-gradient(180deg, var(--color-slate-950) 0%, var(--color-slate-900) 100%);
   --text: var(--color-slate-50);
   --text-muted: var(--color-slate-400);
   --border: var(--color-slate-700);
   --border-strong: var(--color-slate-600);
+  --hairline: rgba(255, 255, 255, 0.10);
+  --hairline-highlight: rgba(255, 255, 255, 0.08);
   --accent: var(--color-primary-400);
   --accent-hover: var(--color-primary-300);
   --accent-contrast: var(--color-slate-950);
@@ -292,8 +330,10 @@
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(129, 140, 248, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(99, 102, 241, 0.14);
-  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 22px rgba(99, 102, 241, 0.2);
+  --shadow-lg: 0 22px 44px -16px rgba(0, 0, 0, 0.62), 0 10px 26px -12px rgba(99, 102, 241, 0.24);
   --shadow-focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
+  --glow-ambient: 0 0 88px -10px rgba(124, 58, 237, 0.38);
+  --glow-brand: 0 10px 38px -8px rgba(129, 140, 248, 0.52);
 
   /* Splash gradient tokens (dark) */
   --splash-gradient: var(--gradient-brand);

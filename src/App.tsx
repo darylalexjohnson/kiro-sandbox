@@ -51,12 +51,12 @@ function App() {
               </Stack>
             </header>
 
-            <div className="app__demo">
+            <div className="app__bento">
               <Card>
                 <Stack direction="column" gap={4}>
-                  <Badge variant="accent">New</Badge>
+                  <Badge variant="accent">Buttons</Badge>
                   <p className="app__card-text">
-                    These buttons are drawn entirely from design tokens — colours,
+                    Every control is drawn entirely from design tokens — colours,
                     spacing, radii, and typography all flow from CSS custom properties.
                   </p>
                   <Stack direction="row" gap={3}>
@@ -67,6 +67,37 @@ function App() {
                   <Button variant="secondary" disabled>
                     Disabled
                   </Button>
+                </Stack>
+              </Card>
+
+              <Card>
+                <Stack direction="column" gap={4}>
+                  <h2 className="app__card-title">Badges</h2>
+                  <Stack direction="row" gap={3}>
+                    <Badge variant="neutral">Neutral</Badge>
+                    <Badge variant="accent">Accent</Badge>
+                  </Stack>
+                  <p className="app__card-text">Clean pills with a hairline ring.</p>
+                </Stack>
+              </Card>
+
+              <Card>
+                <Stack direction="column" gap={4}>
+                  <h2 className="app__card-title">Design tokens</h2>
+                  <p className="app__card-text">
+                    A three-layer system: raw ramps, semantic aliases, then per-theme
+                    overrides — so light and dark stay perfectly in sync.
+                  </p>
+                </Stack>
+              </Card>
+
+              <Card>
+                <Stack direction="column" gap={4}>
+                  <h2 className="app__card-title">Frosted glass</h2>
+                  <p className="app__card-text">
+                    Translucent surfaces, a backdrop blur, hairline borders, and a soft
+                    ambient glow float above a slowly breathing gradient mesh.
+                  </p>
                 </Stack>
               </Card>
             </div>
