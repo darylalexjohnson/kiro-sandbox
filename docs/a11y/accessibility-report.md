@@ -1,6 +1,6 @@
 # Accessibility report
 
-Generated: 2026-09-09T04:39:22.510Z
+Generated: 2026-09-09T05:19:18.824Z
 
 Base URL: `http://127.0.0.1:4173`
 
